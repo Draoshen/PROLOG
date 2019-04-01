@@ -41,7 +41,7 @@ esPiezas_orden(pieza(Anchura1,_,Profundidad1,_),pieza(Anchura2,_,Profundidad2,_)
 	mayorOigual(Anchura2,Anchura1), mayorOigual(Profundidad2,Profundidad1).
 
 %Sumar dos alturas de las piezas y comprobamos que sea igual a Z
-sumaAlturas([_,Altura1,_,_],[_,Altura2,_,_],Z):-suma(Altura1,Altura2,Z).
+sumaAlturas(pieza(_,Altura1,_,_),pieza(_,Altura2,_,_),Z):-suma(Altura1,Altura2,Z).
 
 %Para es Torre necesito saber el caso base que es el de dos piezas, es decir, un lista con solo un
 %elemento. En este caso se va al último elemento y compara con el penúltimo, y después si todo va

@@ -68,8 +68,9 @@ esTorre([X|[Y|Ys]]):-esPiezas_orden(X,Y),esTorre([Y|Ys]).
 %Lo primero que hace es verifica si la lista es una torre, y después mira si la altura es la pasada
 %o te la calcula, si es que lo dejas como Variable.
 
-alturaTorre([X],A):-sumaAlturas(X,pieza(0,0,0,a),A).
-%alturaTorre([X|[Y|Ys]],A):-sumaAlturas(X,Y,B),suma(B,alturaTorre()).
+
+alturaTorre([],A):-suma(A,0,0).
+alturaTorre([pieza(_,Altura1,_,_)|Ys],A):-alturaTorre(Ys,G),suma(G,Altura1,A),esTorre([pieza(_,Altura1,_,_)|Ys]).
 
 
 %Para coloresTorre([],[]), utilizamos la función es miembro

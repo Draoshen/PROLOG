@@ -4,12 +4,15 @@ alumno_prode(mellado,climent,rafael,y16m032).
 alumno_prode(mellado,climent,rafael,y16m032).
 alumno_prode(vazquez,acevedo,jorge,y16m032).
 
+
 0.
 nat(0).
 
 nat(s(N)):-nat(N).
 
 
+par(0).
+par(s(s(X))):-par(X).
 
 igualdad(0,0).
 igualdad(s(N),s(M)):-igualdad(A,B).
@@ -70,8 +73,17 @@ alturaTorre([X],A):-sumaAlturas(X,pieza(0,0,0,a),A).
 
 
 %Para coloresTorre([],[]), utilizamos la función es miembro
-%Falla si le pasas un lista con más colores de los que tenga la torre.
+%Falla si le pasas un lista con más colores de los que tenga la torre, quitando eso toda va bien
 colorsTorre([pieza(_,_,_,Color1)],[C|Cs]):-es_miembro(Color1,[C|Cs]).
 colorsTorre([pieza(_,_,_,Color2)|Ys],[C|Cs]):-es_miembro(Color2,[C|Cs]),colorsTorre(Ys,Cs).
 
 coloresTorre(X,Y):-esTorre(X),colorsTorre(X,Y).
+
+
+
+%OJO esta es la definitiva te calcula los elementos que hay en un lista,UNA COSA MUY IMPORTANTE es
+%que no podeís cambiar el orden de la recursividad si no, no funcionará el programa, te dará una
+%solución que no queremos ver.
+
+numElems([],C):-suma(C,0,0).
+numElems([X|Ys],C):-numElems(Ys,G),suma(C,0,s(G)).

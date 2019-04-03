@@ -25,6 +25,8 @@ igualdad(v,v).
 igualdad(am,am).
 igualdad(r,r).
 igualdad(0,0).
+%Esta la añado para los colores del edificio
+igualdad(b,b).
 igualdad(s(N),s(M)):-igualdad(A,B).
 
 mayorOigual(X,0).
@@ -47,6 +49,12 @@ color(r).
 color(v).
 color(a).
 color(am).
+
+colorEdificio(r).
+colorEdificio(v).
+colorEdificio(a).
+colorEdificio(am).
+colorEdificio(b).
 %Para que no podamos tener que sea cualquier color tenemos que definir la función es miembro
 %Funciona de una manera parecida a Haskell, tienes un caso base sobre el que luego se le aplica
 %recursión.
@@ -107,4 +115,13 @@ numElems([X|Ys],C):-numElems(Ys,G),suma(C,0,s(G)).
 %está presente en la construcción 2 y así con el resto de colores de las piezas de la construcción
 
 coloresIncluidos([Construccion1],[Construccion2]):-colorsTorre([Construccion1],ColoresTorre1),
-	colorsTorre([Construccion2],ColoresTorre2),igualColors(ColoresTorre1,ColoresTorre2).
+	colorsTorre([Construccion2],ColoresTorre2),igualColors(ColoresTorre1,ColoresTorre2),
+	esTorre([Construccion1]),esTorre([Construccion2]).
+
+listaSoloColores([Color1]):-colorEdificio(Color1).
+listaSoloColores([Color1|Resto]):-colorEdificio(Color1),listaSoloColores(Resto).
+
+edificio([Fila1]):-listaSoloColores(Fila1).
+edificio([[Fila1]|RestoElems]):-listaSoloColores([Fila1]),edificio(RestoElems).
+	
+%esEdificioPar([[Fila1]|RestoFilas]):-

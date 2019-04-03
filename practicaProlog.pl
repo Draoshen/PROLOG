@@ -122,6 +122,21 @@ listaSoloColores([Color1]):-colorEdificio(Color1).
 listaSoloColores([Color1|Resto]):-colorEdificio(Color1),listaSoloColores(Resto).
 
 edificio([Fila1]):-listaSoloColores(Fila1).
-edificio([[Fila1]|RestoElems]):-listaSoloColores([Fila1]),edificio(RestoElems).
+edificio([[Fila1]|RestoElems]):-listaSoloColores([Fila1]),edificio([RestoElems]).
 	
-%esEdificioPar([[Fila1]|RestoFilas]):-
+numClavos([],C):-suma(C,0,0).
+
+%numClavos([Color1],C):-igualdad(Color1,a),suma(C,0,s(0)).
+%numClavos([Color1],C):-igualdad(Color1,v),suma(C,0,s(0)).
+%numClavos([Color1],C):-igualdad(Color1,am),suma(C,0,s(0)).
+%numClavos([Color1],C):-igualdad(Color1,r),suma(C,0,s(0)).
+%numClavos([Color1],C):-igualdad(Color1,b),suma(C,0,0).
+
+numClavos([Color1|Resto],C):-igualdad(Color1,b),numClavos(Resto,C),suma(C,0,G).
+numClavos([Color1|Resto],C):-igualdad(Color1,a),numClavos(Resto,G),suma(C,0,s(G)).
+numClavos([Color1|Resto],C):-igualdad(Color1,am),numClavos(Resto,G),suma(C,0,s(G)).
+numClavos([Color1|Resto],C):-igualdad(Color1,r),numClavos(Resto,G),suma(C,0,s(G)).
+numClavos([Color1|Resto],C):-igualdad(Color1,v),numClavos(Resto,G),suma(C,0,s(G)).
+
+%esEdificioPar([[Fila1]|RestoFilas]):
+-

@@ -38,10 +38,7 @@ mayorOigual(s(A),s(B)):- mayorOigual(A,B).
 suma(0,X,X):-nat(X).
 suma(s(X),Y,s(Z)):-suma(X,Y,Z).
 
-%Se lee igual que la suma el primero menos el segundo es igual al tercero ?
-resta(A,0, A).				% a - 0 = a
-resta(A, s(B), C) :- 				% If a - b = (c + 1) then a - (b + 1) = c
-resta(A, B, s(C)).	
+	
 
 
 
@@ -141,3 +138,14 @@ numClavos([Color1|Resto],C):-igualdad(Color1,v),numClavos(Resto,G),suma(C,0,s(G)
 
 esEdificioPar([]).
 esEdificioPar([Fila1|RestoFilas]):-numClavos(Fila1,G),par(G),esEdificioPar(RestoFilas).
+
+
+menor(0,X).
+menor(s(A),s(B)):-menor(A,B).
+
+esEdificioPiramide([ [] ]).
+esEdificioPiramide([Fila1|[]]).
+esEdificioPiramide([ Fila | Resto ]):-numClavos(Fila,C),esAncho(Resto,D),menor(C,D).
+
+esAncho([ [] ] ,0).
+esAncho( [Fila1|Resto],C):-numClavos(Fila1,C).

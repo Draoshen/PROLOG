@@ -5,6 +5,8 @@ alumno_prode(mellado,climent,rafael,y16m032).
 alumno_prode(vazquez,acevedo,jorge,y16m032).
 
 
+%TODO: hacer que colores torre funcione si la lista tiene el mismo número de elementos que la lista
+%de colores
 0.
 nat(0).
 
@@ -14,6 +16,14 @@ nat(s(N)):-nat(N).
 par(0).
 par(s(s(X))):-par(X).
 
+%Mira si dos listas son iguales la usaremos para lista de colores
+igualColors([],[]).
+igualColors([Color1|Resto1],[Color2|Resto2]):-igualdad(Color1,Color2),igualColors(Resto1,Resto2).
+
+igualdad(a,a).
+igualdad(v,v).
+igualdad(am,am).
+igualdad(r,r).
 igualdad(0,0).
 igualdad(s(N),s(M)):-igualdad(A,B).
 
@@ -75,8 +85,9 @@ alturaTorre([pieza(_,Altura1,_,_)|Ys],A):-alturaTorre(Ys,G),suma(G,Altura1,A),es
 
 %Para coloresTorre([],[]), utilizamos la función es miembro
 %Falla si le pasas un lista con más colores de los que tenga la torre, quitando eso toda va bien
-colorsTorre([pieza(_,_,_,Color1)],[C|Cs]):-es_miembro(Color1,[C|Cs]).
-colorsTorre([pieza(_,_,_,Color2)|Ys],[C|Cs]):-es_miembro(Color2,[C|Cs]),colorsTorre(Ys,Cs).
+colorsTorre([pieza(_,_,_,Color1)],[C]):-igualdad(Color1,C).
+colorsTorre([pieza(_,_,_,Color2)|Ys],[C|Cs]):-igualdad(Color2,C),colorsTorre(Ys,Cs).
+	
 
 coloresTorre(X,Y):-esTorre(X),colorsTorre(X,Y).
 
@@ -86,5 +97,14 @@ coloresTorre(X,Y):-esTorre(X),colorsTorre(X,Y).
 %que no podeís cambiar el orden de la recursividad si no, no funcionará el programa, te dará una
 %solución que no queremos ver.
 
+%Tener esto es como tener el santo Grial, ayuda mucho a entender como hacer cosas recursivas simples
+
+
 numElems([],C):-suma(C,0,0).
 numElems([X|Ys],C):-numElems(Ys,G),suma(C,0,s(G)).
+
+%Para hacer el de los colores creo que lo mejor sería coger el color de la primera pieza y ver si
+%está presente en la construcción 2 y así con el resto de colores de las piezas de la construcción
+
+coloresIncluidos([Construccion1],[Construccion2]):-colorsTorre([Construccion1],ColoresTorre1),
+	colorsTorre([Construccion2],ColoresTorre2),igualColors(ColoresTorre1,ColoresTorre2).

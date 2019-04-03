@@ -1,7 +1,7 @@
 %:-module(practica1_MelladoClimentRafael,_,[]).
 %About students.
 alumno_prode(mellado,climent,rafael,y16m032).
-alumno_prode(mellado,climent,rafael,y16m032).
+alumno_prode(miguel,hernandez,jaime,y16m003).
 alumno_prode(vazquez,acevedo,jorge,y16m032).
 
 
@@ -118,11 +118,12 @@ coloresIncluidos([Construccion1],[Construccion2]):-colorsTorre([Construccion1],C
 	colorsTorre([Construccion2],ColoresTorre2),igualColors(ColoresTorre1,ColoresTorre2),
 	esTorre([Construccion1]),esTorre([Construccion2]).
 
-listaSoloColores([Color1]):-colorEdificio(Color1).
+listaSoloColores([]):-colorEdificio(b).
 listaSoloColores([Color1|Resto]):-colorEdificio(Color1),listaSoloColores(Resto).
 
-edificio([Fila1]):-listaSoloColores(Fila1).
-edificio([[Fila1]|RestoElems]):-listaSoloColores([Fila1]),edificio([RestoElems]).
+edificio([]).
+edificio( [ [] ]).
+edificio([Fila1|RestoElems]):-listaSoloColores(Fila1),edificio(RestoElems).
 	
 numClavos([],C):-suma(C,0,0).
 
@@ -138,5 +139,5 @@ numClavos([Color1|Resto],C):-igualdad(Color1,am),numClavos(Resto,G),suma(C,0,s(G
 numClavos([Color1|Resto],C):-igualdad(Color1,r),numClavos(Resto,G),suma(C,0,s(G)).
 numClavos([Color1|Resto],C):-igualdad(Color1,v),numClavos(Resto,G),suma(C,0,s(G)).
 
-%esEdificioPar([[Fila1]|RestoFilas]):
--
+esEdificioPar([]).
+esEdificioPar([Fila1|RestoFilas]):-numClavos(Fila1,G),par(G),esEdificioPar(RestoFilas).
